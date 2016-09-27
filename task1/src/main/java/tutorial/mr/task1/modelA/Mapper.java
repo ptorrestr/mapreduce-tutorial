@@ -1,4 +1,4 @@
-package tutorial.mr.task1.model;
+package tutorial.mr.task1.modelA;
 
 import java.util.function.Function;
 

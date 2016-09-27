@@ -1,4 +1,4 @@
-package tutorial.mr.task1.model;
+package tutorial.mr.task1.modelB;
 
 public class Sum {
 	private int op1;
@@ -9,7 +9,7 @@ public class Sum {
 		this.op2 = op2;
 	}
 	
-	public int doOperation() {
-		return this.op1 + this.op2;
+	public Result doOperation() {
+		return new Result( this.op1 + this.op2);
 	}
 }

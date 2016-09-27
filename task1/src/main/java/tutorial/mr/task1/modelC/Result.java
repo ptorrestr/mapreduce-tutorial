@@ -1,4 +1,4 @@
-package tutorial.mr.task1.modelB;
+package tutorial.mr.task1.modelC;
 
 public class Result {
 	private int result;

@@ -10,15 +10,15 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.collect.Lists;
+
 import tutorial.mr.task1.modelB.Mapper;
 import tutorial.mr.task1.modelB.Reducer;
-import tutorial.mr.task1.modelB.Result;
 import tutorial.mr.task1.modelB.Sum;
-
-import com.google.common.collect.Lists;
 
 public class ExampleB {
 	private static final Logger logger = LoggerFactory.getLogger(ExampleB.class);
+	// t1
 	
 	@Test
 	public void example1() {
@@ -27,9 +27,9 @@ public class ExampleB {
 		Sum s3 = new Sum(5,6);
 		List<Sum> sums = Lists.newArrayList(s1, s2, s3);
 		
-		Result total = sums.stream().map(new Mapper()).reduce(new Reducer()).get();
+		int total = sums.stream().map(new Mapper()).reduce(new Reducer()).get();
 		
-		assertThat( total.getResult(), is(equalTo(1+2+3+4+5+6)) );
-		logger.info( "The sum is : {} ", total.getResult());
+		assertThat( total, is(equalTo(1+2+3+4+5+6)) );
+		logger.info( "The sum is : {} ", total);
 	}
 }

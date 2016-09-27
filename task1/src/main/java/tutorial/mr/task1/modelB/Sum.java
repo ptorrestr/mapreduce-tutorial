@@ -9,7 +9,7 @@ public class Sum {
 		this.op2 = op2;
 	}
 	
-	public Result doOperation() {
-		return new Result( this.op1 + this.op2);
+	public int doOperation() {
+		return this.op1 + this.op2;
 	}
 }

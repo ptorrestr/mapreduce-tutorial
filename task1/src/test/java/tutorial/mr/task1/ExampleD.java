@@ -17,13 +17,19 @@ public class ExampleD {
 	
 	@Test
 	public void example1() {
+		// Create a list of element to process
 		List<Integer> sums = Lists.newArrayList(1,2,3,4,5,6);
 		
-		int total = sums.stream().map( p->p
-				)
-				.reduce( (p,q) -> p+q
-				)
-				.get();
+		/*
+		 * Mapper and reducer can add several lines of code depending on task. We can avoid this
+		 * using Lambda expressions available in Java-8
+		 */
+		int total = sums.stream()
+				.map( p->p ) // Map into a new type (in this case we preserve the type)
+				.reduce( (p,q) -> p+q) // Reduce two values into a new one by adding them
+				.get(); 
+		// See that you do not require to define any datatype since the Java compiler will do it
+		// for you
 		
 		assertThat( total, is(equalTo(1+2+3+4+5+6)) );
 		logger.info( "The sum is : {} ", total);

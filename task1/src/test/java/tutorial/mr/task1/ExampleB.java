@@ -18,15 +18,16 @@ import tutorial.mr.task1.modelB.Sum;
 
 public class ExampleB {
 	private static final Logger logger = LoggerFactory.getLogger(ExampleB.class);
-	// t1
 	
 	@Test
 	public void example1() {
+		// Create a list of element to process
 		Sum s1 = new Sum(1,2);
 		Sum s2 = new Sum(3,4);
 		Sum s3 = new Sum(5,6);
 		List<Sum> sums = Lists.newArrayList(s1, s2, s3);
 		
+		// Mapper accepts Sum objects as input
 		int total = sums.stream().map(new Mapper()).reduce(new Reducer()).get();
 		
 		assertThat( total, is(equalTo(1+2+3+4+5+6)) );

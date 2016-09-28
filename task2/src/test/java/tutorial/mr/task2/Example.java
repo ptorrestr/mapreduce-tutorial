@@ -1,7 +1,6 @@
 package tutorial.mr.task2;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -13,8 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import tutorial.mr.task2.model.Builder;
 import tutorial.mr.task2.model.Document;
-import tutorial.mr.task2.model.WordList;
-import tutorial.mr.task2.model.Entry;
+
 import tutorial.mr.task2.model.Mapper1;
 import tutorial.mr.task2.model.Mapper2;
 import tutorial.mr.task2.model.Mapper3;
@@ -38,9 +36,7 @@ public class Example {
 			.map(new Mapper1()) // Document => WordList
 			.map(new Mapper2()) // WordList => List<Entry>
 			.flatMap(new Mapper3())  // List<Entry> => Entry
-			.reduce(Maps.newHashMap(), new ReducerAccumulator(), new ReducerCombiner())
-			;
-		
+			.reduce(Maps.newHashMap(), new ReducerAccumulator(), new ReducerCombiner());
 		logger.info("[Classic] Inverted Index has {} entries", invertedIndex.size());
 		logger.info("{}", invertedIndex);
 	}
@@ -56,14 +52,15 @@ public class Example {
 			.flatMap(Collection::stream)
 		    .reduce( m, //Neutral
 		    		 (p, q) -> { // Accumulator
-		    			    p.merge(q.getWord(), 
-		    			    		Lists.newArrayList(q.getDocumentId()), 
-		    			    		(t, u) -> Stream.concat(t.stream(), u.stream())
-		    			    					.distinct()
-		    			    					.collect(Collectors.toList()));
-		    			    return p;
-		    			 		
-		    			 },
+			    			    Map<String, List<Integer>> k = Maps.newHashMap();
+			    			    k.putAll(p);
+			    			    k.merge(q.getWord(), 
+			    			    		Lists.newArrayList(q.getDocumentId()), 
+			    			    		(t, u) -> Stream.concat(t.stream(), u.stream())
+			    			    					.distinct()
+			    			    					.collect(Collectors.toList()));
+			    			    return k;
+		    			 		},
 		    		 (p, q) -> Stream.of(p, q)  // Combiner
 		    			 		.map(Map::entrySet)
 		    			 		.flatMap(Collection::stream)
@@ -75,12 +72,10 @@ public class Example {
 		    			 								.distinct()
 		    			 								.collect(Collectors.toList())
 		    			 				)
-		    			 		)
+		    	                 )
 		    );
-		
 		logger.info("[Lambda] Inverted Index has {} entries", invertedIndex.size());
 		logger.info("{}", invertedIndex);
-		
 	}
 	
 	@Test
@@ -105,9 +100,9 @@ public class Example {
 		    			    return k;
 		    			 		
 		    			 },
-		    		 (p, q) -> { 
+		    		 (p, q) -> {  // Combiner
 		    			 	logger.info("Thread {} - p {}, q {} ", Thread.currentThread().getName(), p, q);
-		    			 	return Stream.of(p, q)  // Combiner
+		    			 	return Stream.of(p, q)
 		    			 		.map(Map::entrySet)
 		    			 		.flatMap(Collection::stream)
 		    			 		.collect(
@@ -121,9 +116,7 @@ public class Example {
 		    			 		);
 		    		 }
 		    );
-		
 		logger.info("[Parallel] Inverted Index has {} entries", invertedIndex.size());
-		logger.info("{}", invertedIndex);
-		
+		logger.info("{}", invertedIndex);	
 	}
 }

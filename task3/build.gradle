@@ -37,3 +37,17 @@ test {
     logger.lifecycle("Running test: " + descriptor)
   }
 }
+
+import de.undercouch.gradle.tasks.download.Download
+
+// Get data
+task downloadBooks(type: Download) {
+  src([
+    'http://srvgal80.deri.ie/~pabtor/books/pg11.txt',
+    'http://srvgal80.deri.ie/~pabtor/books/pg1342.txt',
+    'http://srvgal80.deri.ie/~pabtor/books/pg16328.txt'
+  ])  
+  dest 'src/test/resources'
+}
+
+processTestResources.dependsOn  downloadBooks

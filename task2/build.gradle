@@ -7,46 +7,4 @@
  * user guide available at https://docs.gradle.org/3.1/userguide/tutorial_java_projects.html
  */
 
-plugins {
-  id "java"
-  id "application"
-  id "eclipse"
-  id "de.undercouch.download" version "3.1.1"
-}
-
-repositories {
-  jcenter()
-}
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
-dependencies {
-  compile 'org.slf4j:slf4j-api:1.7.21'
-  compile 'org.slf4j:slf4j-log4j12:1.7.21'
-  compile 'com.google.guava:guava:19.0'
-  testCompile 'junit:junit:4.12'
-  testCompile 'org.hamcrest:hamcrest-junit:2.0.0.0'
-}
-
-test {
-  // show standard out and standard error of the test JVM(s) on the console
-  testLogging.showStandardStreams = true
-  beforeTest { descriptor ->
-    logger.lifecycle("Running test: " + descriptor)
-  }
-}
-
-import de.undercouch.gradle.tasks.download.Download
-
-// Get data
-task downloadBooks(type: Download) {
-  src([
-    'http://srvgal80.deri.ie/~pabtor/books/pg11.txt',
-    'http://srvgal80.deri.ie/~pabtor/books/pg1342.txt',
-    'http://srvgal80.deri.ie/~pabtor/books/pg16328.txt'
-  ])  
-  dest 'src/test/resources'
-}
-
 processTestResources.dependsOn  downloadBooks

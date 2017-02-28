@@ -1,0 +1,53 @@
+task('wrapper', type: Wrapper) {
+  gradleVersion = '2.6'
+}
+
+buildscript {
+  repositories {
+    jcenter()
+  }
+  dependencies {
+    classpath 'de.undercouch:gradle-download-task:3.2.0'
+  }
+}
+
+import de.undercouch.gradle.tasks.download.Download
+
+subprojects {
+  apply plugin: "java"
+  apply plugin: "eclipse"
+  apply plugin: 'de.undercouch.download'
+
+  sourceCompatibility = 1.8
+  targetCompatibility = 1.8
+
+  repositories { 
+    jcenter()
+  }
+
+  dependencies {
+    compile "org.slf4j:slf4j-api:${slf4jVersion}"
+    compile "ch.qos.logback:logback-classic:${logbackVersion}"
+    compile "com.google.guava:guava:${guavaVersion}"
+    testCompile "junit:junit:${junitVersion}"
+    testCompile "org.hamcrest:hamcrest-junit:${hamcrestVersion}"
+  }
+
+  test {
+    // show standard out and error on the console
+    testLogging.showStandardStreams = true
+    beforeTest { descriptor ->
+      logger.lifecycle("\n\nRunning test: " + descriptor)
+    }
+  }
+
+  // Get data
+  task downloadBooks(type: Download) {
+    src([
+      'http://srvgal80.deri.ie/~pabtor/books/pg11.txt',
+      'http://srvgal80.deri.ie/~pabtor/books/pg1342.txt',
+      'http://srvgal80.deri.ie/~pabtor/books/pg16328.txt'
+    ])  
+    dest 'src/test/resources'
+  }
+}

@@ -10,11 +10,11 @@ import java.util.function.BinaryOperator;
  * integer is generated.
  *
  */
-public class Reducer implements BinaryOperator<Integer> {
+public class Reducer implements BinaryOperator<Datum> {
 
 	@Override
-	public Integer apply(Integer t, Integer u) {
-		return t + u;
+	public Datum apply(Datum t, Datum u) {
+		return new Datum(t.op1 + u.op1);
 	}
 
 }

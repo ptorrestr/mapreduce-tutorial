@@ -12,8 +12,8 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
 
-public class ExampleD {
-	private static final Logger logger = LoggerFactory.getLogger(ExampleD.class);
+public class ModelD {
+	private static final Logger logger = LoggerFactory.getLogger(ModelD.class);
 	
 	@Test
 	public void example1() {

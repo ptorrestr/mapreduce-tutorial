@@ -5,7 +5,10 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 import java.util.List;
+import java.util.function.BinaryOperator;
+import java.util.function.Function;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,14 +18,15 @@ import tutorial.mr.task1.modelA.Reducer;
 
 import com.google.common.collect.Lists;
 
-public class ExampleA {
-	private static final Logger logger = LoggerFactory.getLogger(ExampleA.class);
+public class ModelA {
+	private static final Logger logger = LoggerFactory.getLogger(ModelA.class);
+	private List<Integer> sums = Lists.newArrayList(1,2,3,4,5,6);
 	
 	@Test
+	/**
+	 * Sum a list of integers
+	 */
 	public void example1() {
-		// Create a list of element to process
-		List<Integer> sums = Lists.newArrayList(1,2,3,4,5,6);
-		
 		// Execute map reduce. Just one line of code!
 		int total = sums.stream().map(new Mapper()).reduce(new Reducer()).get();
 		
@@ -35,5 +39,34 @@ public class ExampleA {
 		
 		assertThat( total, is(equalTo(1+2+3+4+5+6)) );
 		logger.info( "The sum is : {} ", total);
+	}
+	
+	@Ignore("You need to implement this") 
+	@Test
+	/**
+	 * Multiply a list of elements
+	 */
+	public void exercise1() {
+		// Execute map
+		/* Your code goes here */	
+		
+		int total = 0;	
+		assertThat(total, is(equalTo(1*2*3*4*5*6)) );
+	}
+	
+	class Mapper2 implements Function<Integer, Integer> {
+		@Override
+		public Integer apply(Integer t) {
+			// Your code should be here
+			return null;
+		}
+	}
+	
+	class Reducer2 implements BinaryOperator<Integer> {
+		@Override
+		public Integer apply(Integer t, Integer u) {
+			// Your code should be here
+			return null;
+		}	
 	}
 }

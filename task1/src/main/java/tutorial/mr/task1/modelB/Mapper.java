@@ -10,11 +10,11 @@ import java.util.function.Function;
  * an integer.
  *
  */
-public class Mapper implements Function<Sum, Integer> {
+public class Mapper implements Function<Datum, Datum> {
 
 	@Override
-	public Integer apply(Sum t) {
-		return t.doOperation();
+	public Datum apply(Datum t) {
+		return new Datum(t.op1);
 	}
 
 }

@@ -10,11 +10,15 @@ import java.util.function.BinaryOperator;
  * Result object is generated.
  *
  */
-public class Reducer implements BinaryOperator<OutDatum> {
-
-	@Override
-	public OutDatum apply(OutDatum t, OutDatum u) {
-		return new OutDatum(t.getValue() + u.getValue());
+public class Reducer<T, K extends BinaryOperator<T>> implements BinaryOperator<OutDatum<T>> {
+	K fun;
+	
+	public Reducer(K fun) {
+		this.fun = fun;
 	}
-
+	
+	@Override
+	public OutDatum<T> apply(OutDatum<T> t, OutDatum<T> u) {
+		return new OutDatum<T>(fun.apply(t.getValue(),u.getValue()) );
+	}
 }

@@ -1,6 +1,9 @@
 package tutorial.mr.task1.modelC;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.function.Function;
+
+import org.apache.commons.beanutils.PropertyUtils;
 
 /**
  * A Mapper function takes a single datum and creates a new version
@@ -10,11 +13,27 @@ import java.util.function.Function;
  * a Result object.
  *
  */
-public class Mapper implements Function<InDatum, OutDatum> {
-
-	@Override
-	public OutDatum apply(InDatum t) {
-		return new OutDatum(t.getOp1());
+public class Mapper<T> implements Function<InDatum, OutDatum<T>> {
+	String prop;
+	
+	public Mapper(String prop) {
+		this.prop = prop;
 	}
 
+	@Override
+	public OutDatum<T> apply(InDatum t) {
+		try {
+			return new OutDatum<T>( (T) PropertyUtils.getSimpleProperty(t, prop));
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

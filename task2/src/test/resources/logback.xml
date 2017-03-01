@@ -1,0 +1,11 @@
+<configuration>
+  <appender name="stdoutColor" class="ch.qos.logback.core.ConsoleAppender">
+    <target>System.out</target>
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level (%file:%line\) - %message%n</pattern>
+    </encoder>
+  </appender>
+  <root level="ALL">
+    <appender-ref ref="stdoutColor" />
+  </root>
+</configuration>

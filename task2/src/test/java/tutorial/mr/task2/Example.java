@@ -10,14 +10,13 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import tutorial.mr.task2.model.Builder;
-import tutorial.mr.task2.model.Document;
-
 import tutorial.mr.task2.model.Mapper1;
 import tutorial.mr.task2.model.Mapper2;
 import tutorial.mr.task2.model.Mapper3;
 import tutorial.mr.task2.model.ReducerAccumulator;
 import tutorial.mr.task2.model.ReducerCombiner;
+import tutorial.mr.task2.model.index.Builder;
+import tutorial.mr.task2.model.index.Document;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;

@@ -1,4 +1,4 @@
-package tutorial.mr.task2.model;
+package tutorial.mr.task2.model.index;
 
 public class Document {
 	private int id;

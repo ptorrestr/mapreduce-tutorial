@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
 
+import tutorial.mr.task2.model.index.Entry;
+
 import com.google.common.collect.Lists;
 
 public class ReducerAccumulator implements BiFunction<Map<String, List<Integer>>, Entry, Map<String, List<Integer>>> {

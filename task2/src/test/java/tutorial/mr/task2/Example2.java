@@ -14,8 +14,8 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import tutorial.mr.task2.model.Builder;
-import tutorial.mr.task2.model.Document;
+import tutorial.mr.task2.model.index.Builder;
+import tutorial.mr.task2.model.index.Document;
 
 import com.google.common.base.Charsets;
 import com.google.common.base.Stopwatch;
@@ -26,15 +26,15 @@ import com.google.common.io.Resources;
 public class Example2 {
 	private static final Logger logger = LoggerFactory.getLogger(Example.class);
 	private final String file1 = "pg11.txt";
-	private final String file2 = "pg1342.txt";
+	//private final String file2 = "pg1342.txt";
 	private final String file3 = "pg16328.txt";
 
 	public List<Document> readFiles() throws IOException {
 		// Read files
 		Document doc1 = new Document(1, Resources.toString(Resources.getResource(file1), Charsets.UTF_8));
-		Document doc2 = new Document(2, Resources.toString(Resources.getResource(file2), Charsets.UTF_8));
+		//Document doc2 = new Document(2, Resources.toString(Resources.getResource(file2), Charsets.UTF_8));
 		Document doc3 = new Document(3, Resources.toString(Resources.getResource(file3), Charsets.UTF_8));
-		return Lists.newArrayList(doc1, doc2, doc3);
+		return Lists.newArrayList(doc1, doc3);
 	}
 	
 	@Test

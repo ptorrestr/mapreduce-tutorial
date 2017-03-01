@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
+import tutorial.mr.task2.model.index.Entry;
+
 public class Mapper3 implements Function<List<Entry>, Stream<Entry>>{
 
 	@Override

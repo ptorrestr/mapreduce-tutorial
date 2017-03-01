@@ -1,4 +1,4 @@
-package tutorial.mr.task2.model;
+package tutorial.mr.task2.model.index;
 
 import java.util.List;
 import java.util.stream.Collectors;

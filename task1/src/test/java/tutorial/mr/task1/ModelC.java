@@ -49,10 +49,13 @@ public class ModelC {
 	@Ignore("You need to implement this")
 	@Test
 	public void exercise3() {
-		// Concatenate the string (3rd argument)
+		// TODO: Concatenate the string (3rd argument)
 		// Tip: You need to create a new BinaryOperator
+		/* Your code goes here*/
+		
 		String total = "";
 		
+		/* end */
 		assertThat(total, containsString("s1"));
 		assertThat(total, containsString("s2"));
 		assertThat(total, containsString("s3"));

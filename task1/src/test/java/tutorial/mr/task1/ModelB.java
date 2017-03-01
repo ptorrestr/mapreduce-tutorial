@@ -36,13 +36,13 @@ public class ModelB {
 	
 	@Ignore("You need to implement this") 
 	@Test
-	/**
-	 * Multiply a list of elements
-	 */
 	public void exercise2() {
-		// Your code goes here
+		//TODO: Multiply input data
+		/* Your code goes here*/
+		
 		int total = 0;
 		
+		/* end */
 		assertThat( total, is(equalTo(1*2*3*4*5*6)) );
 		logger.info( "The multiplication is {} ", total);
 		

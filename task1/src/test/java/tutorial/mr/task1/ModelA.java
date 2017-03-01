@@ -43,30 +43,37 @@ public class ModelA {
 	
 	@Ignore("You need to implement this") 
 	@Test
-	/**
-	 * Multiply a list of elements
-	 */
 	public void exercise1() {
-		// Execute map
+		// TODO: Multiply a list of elements
 		/* Your code goes here */	
 		
-		int total = 0;	
+		int total = 0;
+		
+		/* end */
 		assertThat(total, is(equalTo(1*2*3*4*5*6)) );
 	}
 	
 	class Mapper2 implements Function<Integer, Integer> {
 		@Override
 		public Integer apply(Integer t) {
-			// Your code should be here
+			// TODO: Get integer
+			/* Your code goes here */
+			
 			return null;
+			
+			/* end */
 		}
 	}
 	
 	class Reducer2 implements BinaryOperator<Integer> {
 		@Override
 		public Integer apply(Integer t, Integer u) {
-			// Your code should be here
+			// TODO: Multiply integers
+			/* Your code goes here */
+			
 			return null;
+			
+			/* end */
 		}	
 	}
 }

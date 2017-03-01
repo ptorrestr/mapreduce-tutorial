@@ -5,15 +5,14 @@ package tutorial.mr.task1.modelC;
  * Again, you can define your our types.
  *
  */
-public class Result {
-	private int result;
+public class OutDatum {
+	private int op1;
 	
-	public Result(int result) {
-		this.result = result;
+	public OutDatum(int op1) {
+		this.op1 = op1;
 	}
 	
-	public int getResult() {
-		return result;
+	public int getValue() {
+		return op1;
 	}
-
 }

@@ -10,11 +10,11 @@ import java.util.function.BinaryOperator;
  * Result object is generated.
  *
  */
-public class Reducer implements BinaryOperator<Result> {
+public class Reducer implements BinaryOperator<OutDatum> {
 
 	@Override
-	public Result apply(Result t, Result u) {
-		return new Sum(t.getResult(), u.getResult()).doOperation();
+	public OutDatum apply(OutDatum t, OutDatum u) {
+		return new OutDatum(t.getValue() + u.getValue());
 	}
 
 }

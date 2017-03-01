@@ -10,11 +10,11 @@ import java.util.function.Function;
  * a Result object.
  *
  */
-public class Mapper implements Function<Sum, Result> {
+public class Mapper implements Function<InDatum, OutDatum> {
 
 	@Override
-	public Result apply(Sum t) {
-		return t.doOperation();
+	public OutDatum apply(InDatum t) {
+		return new OutDatum(t.getOp1());
 	}
 
 }

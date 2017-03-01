@@ -1,11 +1,11 @@
 <configuration>
-  <appender name="stderrColor" class="ch.qos.logback.core.ConsoleAppender">
-    <target>System.err</target>
+  <appender name="stdoutColor" class="ch.qos.logback.core.ConsoleAppender">
+    <target>System.out</target>
     <encoder>
-      <pattern>%green(%date) %blue([){}%cyan(%thread){}%blue(]) %highlight(%-5level) %logger{15}: %msg%n</pattern>
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level (%file:%line\) - %message%n</pattern>
     </encoder>
   </appender>
   <root level="ALL">
-    <appender-ref ref="stderrColor" />
+    <appender-ref ref="stdoutColor" />
   </root>
 </configuration>

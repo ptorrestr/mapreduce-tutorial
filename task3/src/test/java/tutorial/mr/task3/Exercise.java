@@ -1,11 +1,11 @@
-package tutorial.mr.task2;
+package tutorial.mr.task3;
 
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Exercise {
-	private static final Logger logger = LoggerFactory.getLogger(Example.class);
+	private static final Logger logger = LoggerFactory.getLogger(Exercise.class);
 	
 	@Test
 	public void Exercise1 () {

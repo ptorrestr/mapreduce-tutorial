@@ -20,6 +20,7 @@ public class Mapper<T> implements Function<InDatum, OutDatum<T>> {
 		this.prop = prop;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public OutDatum<T> apply(InDatum t) {
 		try {

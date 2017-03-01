@@ -4,15 +4,15 @@ import java.io.Serializable;
 
 public class Entry implements Serializable{
 	private static final long serialVersionUID = 1L;
-	private int documentId;
+	private String documentId;
 	private String word;
 	
-	public Entry (int documentId, String word) {
+	public Entry (String documentId, String word) {
 		this.documentId = documentId;
 		this.word = word;
 	}
 	
-	public int getDocumentId() {
+	public String getDocumentId() {
 		return documentId;
 	}
 	

@@ -5,15 +5,15 @@ import java.util.List;
 
 public class WordList implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private int documentId;
+	private String documentId;
 	private List<String> words;
 	
-	public WordList(int documentId, List<String> words) {
+	public WordList(String documentId, List<String> words) {
 		this.documentId = documentId;
 		this.words = words;
 	}
 	
-	public int getDocumentId() {
+	public String getDocumentId() {
 		return documentId;
 	}
 	

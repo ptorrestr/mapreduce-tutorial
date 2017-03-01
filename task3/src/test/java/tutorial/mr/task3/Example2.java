@@ -8,12 +8,14 @@ import org.apache.spark.streaming.api.java.JavaDStream;
 import org.apache.spark.streaming.api.java.JavaPairDStream;
 import org.apache.spark.streaming.api.java.JavaReceiverInputDStream;
 import org.apache.spark.streaming.api.java.JavaStreamingContext;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import scala.Tuple2;
 
 public class Example2 {
 
+	@Ignore()
 	@Test
 	public void wordcountStreaming() throws InterruptedException {
 		SparkConf conf = new SparkConf().setMaster("local[2]").setAppName("NetworkWordCount");

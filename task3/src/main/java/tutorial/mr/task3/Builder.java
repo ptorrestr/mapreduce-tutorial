@@ -4,13 +4,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import jersey.repackaged.com.google.common.collect.Maps;
+import scala.Tuple2;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
 public class Builder {
-	public static Document newDocument(int id, String content) {
-		return new Document(id, content);
+	public static Document newDocument(Tuple2<String, String> t) {
+		return new Document(t._1, t._2);
 	}
 	
 	public static WordList newWordList(Document doc) {
@@ -22,8 +23,8 @@ public class Builder {
         	.collect(Collectors.toList()) ;
 	}
 	
-	public static Map<String, List<Integer>> newIndexMap(Entry e) {
-		Map<String, List<Integer>> m = Maps.newHashMap();
+	public static Map<String, List<String>> newIndexMap(Entry e) {
+		Map<String, List<String>> m = Maps.newHashMap();
 		m.put(e.getWord(), Lists.newArrayList(e.getDocumentId()));
 		return m;
 	}

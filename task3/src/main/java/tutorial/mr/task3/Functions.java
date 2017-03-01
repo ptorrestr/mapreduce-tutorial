@@ -11,15 +11,15 @@ import com.google.common.collect.Maps;
 
 public class Functions {
 	
-	public static Map<String, List<Integer>> invertedIndex(List<Document> docs) {
-		Map<String, List<Integer>> m = Maps.newHashMap();
+	public static Map<String, List<String>> invertedIndex(List<Document> docs) {
+		Map<String, List<String>> m = Maps.newHashMap();
 		return docs.stream()
 			.map(Builder::newWordList)
 			.map(Builder::newEntryList)
 			.flatMap(Collection::stream)
 		    .reduce( m, //Neutral
 		    		 (p, q) -> { // Accumulator
-			    			    Map<String, List<Integer>> k = Maps.newHashMap();
+			    			    Map<String, List<String>> k = Maps.newHashMap();
 			    			    k.putAll(p);
 			    			    k.merge(q.getWord(), 
 			    			    		Lists.newArrayList(q.getDocumentId()), 

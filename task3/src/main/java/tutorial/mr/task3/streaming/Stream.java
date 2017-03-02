@@ -1,6 +1,4 @@
-package tutorial.mr.task3;
-
-import jersey.repackaged.com.google.common.collect.Lists;
+package tutorial.mr.task3.streaming;
 
 import org.apache.spark.SparkConf;
 import org.apache.spark.streaming.Durations;
@@ -8,16 +6,14 @@ import org.apache.spark.streaming.api.java.JavaDStream;
 import org.apache.spark.streaming.api.java.JavaPairDStream;
 import org.apache.spark.streaming.api.java.JavaReceiverInputDStream;
 import org.apache.spark.streaming.api.java.JavaStreamingContext;
-import org.junit.Ignore;
-import org.junit.Test;
+
+import com.google.common.collect.Lists;
 
 import scala.Tuple2;
 
-public class Example2 {
+public class Stream {
 
-	@Ignore()
-	@Test
-	public void wordcountStreaming() throws InterruptedException {
+	public static void main(String[] args) throws InterruptedException {
 		SparkConf conf = new SparkConf().setMaster("local[2]").setAppName("NetworkWordCount");
 		try( JavaStreamingContext jssc = new JavaStreamingContext(conf, Durations.seconds(5)) ){
 			// Open a streaming connection on port 9999

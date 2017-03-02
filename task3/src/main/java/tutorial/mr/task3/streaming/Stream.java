@@ -15,7 +15,7 @@ public class Stream {
 
 	public static void main(String[] args) throws InterruptedException {
 		SparkConf conf = new SparkConf().setMaster("local[2]").setAppName("NetworkWordCount");
-		try( JavaStreamingContext jssc = new JavaStreamingContext(conf, Durations.seconds(5)) ){
+		try( JavaStreamingContext jssc = new JavaStreamingContext(conf, Durations.seconds(10)) ){
 			// Open a streaming connection on port 9999
 			JavaReceiverInputDStream<String> lines = jssc.socketTextStream("localhost", 9999);
 			

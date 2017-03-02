@@ -9,12 +9,12 @@ Welcome to MapReduce Tutorial! In this tutorial we are going to introduce some b
 3. Go to [task 3](task3/README.md)
 
 ## Eclipse
-### Unix
+Unix
 ```
 ./gradlew eclipse
 ```
 
-### Windows
+Windows
 ```
 gradlew.bat eclipse
 ```

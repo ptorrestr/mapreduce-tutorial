@@ -43,7 +43,7 @@ public class Example1 {
 	
 	@Test
 	public void invertedIndex1() throws IOException {
-		int executors = 4;
+		int executors = 1;
 		SparkConf conf = new SparkConf();
 		conf.set("spark.executor.instances", Integer.toString(executors));
 		try ( JavaSparkContext jsc = new JavaSparkContext("local", getClass().getSimpleName(), conf) ) {
@@ -69,19 +69,22 @@ public class Example1 {
 			stopwatch.stop();
 			
 			// Print
-			logger.info("1 - worker Spark");
+			logger.info("Spark");
 			logger.info("Elapsed time in Milliseconds ==> {} ", stopwatch.elapsed(TimeUnit.MILLISECONDS));
 		}
 	}
 	
 	@Test
 	public void invertedIndex2() throws IOException {
-		try ( JavaSparkContext jsc = new JavaSparkContext("local", getClass().getSimpleName()) ) {
+		int executors = 1;
+		SparkConf conf = new SparkConf();
+		conf.set("spark.executor.instances", Integer.toString(executors));
+		try ( JavaSparkContext jsc = new JavaSparkContext("local", getClass().getSimpleName(), conf) ) {
 			
 			// Measuring time
 			final Stopwatch stopwatch = Stopwatch.createStarted();
 
-			JavaPairRDD<String, String> docs = jsc.wholeTextFiles(bookPath, 4);
+			JavaPairRDD<String, String> docs = jsc.wholeTextFiles(bookPath, executors);
 	
 			JavaPairRDD<String, List<Tuple2<String, Integer>>> list = docs
 					.flatMap(t -> Lists.newArrayList(t._2.toLowerCase().split("\\W"))
@@ -98,7 +101,7 @@ public class Example1 {
 			stopwatch.stop();
 			
 			// Print
-			logger.info("1 - worker Spark");
+			logger.info("Spark");
 			logger.info("Elapsed time in Milliseconds ==> {} ", stopwatch.elapsed(TimeUnit.MILLISECONDS));
 		}
 	}

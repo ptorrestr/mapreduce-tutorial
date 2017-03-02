@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.apache.commons.lang.SystemUtils;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
@@ -28,17 +29,23 @@ public class Example1 {
 	private static final Logger logger = LoggerFactory.getLogger(Example1.class);
 	private String userDir;
 	private String bookPath;
-	private String resourceDir = "/src/test/resources";
 	private String outputDir;
 	
 	public Example1() {
+		logger.info("{}", System.getProperty("hadoop.home.dir") );
 		userDir = System.getProperty("user.dir");
-		bookPath = System.getProperty("books.dir");
-		if ( bookPath == null) {
-			bookPath = userDir + resourceDir;
-			logger.info("Using local resources: {}", bookPath);
+		if (SystemUtils.IS_OS_WINDOWS) {
+			logger.info("Windows");
+			bookPath = userDir + "\\src\\test\\resources";
+			outputDir = userDir + "\\output";
 		}
-		outputDir = userDir + "/output";
+		else {
+			logger.info("Unix");
+			bookPath = userDir + "/src/test/resources";
+			outputDir = userDir + "/output";
+		}
+		logger.info("Using local resources: {}", bookPath);
+		logger.info("Output: {}", outputDir);
 	}
 	
 	@Test

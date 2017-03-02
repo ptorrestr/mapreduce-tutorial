@@ -19,4 +19,10 @@ task stream(type:JavaExec) {
     args System.getProperty("exec.args").split()
 }
 
+test {
+  systemProperties = [
+    "hadoop.home.dir": "${System.getProperty('user.dir')}"
+  ]
+}
+
 processTestResources.dependsOn  downloadBooks

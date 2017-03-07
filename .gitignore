@@ -1,4 +1,9 @@
+#Others
 output
+
+#Scala
+.cache-main
+.cache-tests
 
 #Vim temp files
 *.swp

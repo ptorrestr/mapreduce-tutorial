@@ -1,0 +1,30 @@
+apply plugin: 'scala'
+
+dependencies {
+  compile "org.apache.spark:spark-core_2.10:${sparkVersion}"
+  compile "org.apache.spark:spark-streaming_2.10:${sparkVersion}"
+  runtime "org.slf4j:slf4j-log4j12:${slf4jVersion}"
+}
+
+configurations.all {
+  exclude module: 'logback-classic'
+}
+
+//task stream(type:JavaExec) {
+//  main = 'tutorial.mr.task3.streaming.Stream'
+//  classpath = sourceSets.main.runtimeClasspath
+//  /* Can pass all the properties: */
+//  systemProperties System.getProperties()
+//  
+//  /* Need to split the space-delimited value in the exec.args */
+//  if ( System.getProperty("exec.args") )
+//    args System.getProperty("exec.args").split()
+//}
+
+test {
+  systemProperties = [
+    "hadoop.home.dir": "${System.getProperty('user.dir')}"
+  ]
+}
+
+processTestResources.dependsOn  downloadBooks

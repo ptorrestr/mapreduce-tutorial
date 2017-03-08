@@ -1,6 +1,9 @@
 #Others
 output
 
+#Python
+__pycache__
+
 #Scala
 .cache-main
 .cache-tests

@@ -27,8 +27,12 @@ class Example2 extends AssertionsForJUnit {
       var edges = graph.edges.count()
       logger.info(s"Number of edges: ${edges}")
       val ids = graph.vertices.map( _._1).collect().toSeq
-      val sh = ShortestPaths.run(graph, ids).vertices.first
-      logger.info(s"${sh}")
+      val diam = ShortestPaths.run(graph, ids)
+        .vertices
+        .mapValues(_.values.max)
+        .collect()
+        .reduce( (t,u) => if (t._2 > u._2) t else u)
+      logger.info(s"Diameter: ${diam._2}")
     }
   } 
 }

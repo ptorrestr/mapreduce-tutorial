@@ -16,25 +16,7 @@ import tutorial.mr.task4.embeddedspark._
 
 class Example extends AssertionsForJUnit {
   var logger = LoggerFactory.getLogger(getClass)
-  
-  @Test def verifyEasy() { // Uses JUnit-style assertions
-    var sb = new StringBuilder("ScalaTest is ")
-    var lb = new ListBuffer[String]
-    sb.append("easy!")
-    assertEquals("ScalaTest is easy!", sb.toString)
-    assertTrue(lb.isEmpty)
-    lb += "sweet"
-    try {
-      "verbose".charAt(-1)
-      fail()
-    }
-    catch {
-      case e: StringIndexOutOfBoundsException => // Expected
-    }
-  }
-  
-  @Test def basicGraph() {
-    val nodes = Array(
+  val nodes = Array(
         (1L, ("Alice", 28)),
         (2L, ("Bob", 27)),
         (3L, ("Charlie", 65)),
@@ -42,7 +24,7 @@ class Example extends AssertionsForJUnit {
         (5L, ("Ed", 55)),
         (6L, ("Fran", 50))
       )
-    val edges = Array(
+  val edges = Array(
         Edge(2L, 1L, 7),
         Edge(2L, 4L, 2),
         Edge(3L, 2L, 4),
@@ -52,6 +34,8 @@ class Example extends AssertionsForJUnit {
         Edge(5L, 3L, 8),
         Edge(5L, 6L, 3)
       )
+  
+  @Test def basicGraph() {
       
     using(new SparkContext(new SparkConf().setAppName("embedded").setMaster("local[2]"))) { sc =>
       val vertexRDD: RDD[(Long, (String, Int))] = sc.parallelize(nodes)
@@ -99,6 +83,26 @@ class Example extends AssertionsForJUnit {
       graph.triplets.filter{ case t => t.attr > 5}.collect.foreach{
         case t => logger.info(s"${t.srcAttr._1} likes ${t.dstAttr._1}")
       }
+    } 
+  }
+  
+  @Test def statistics() {
+    
+    using(new SparkContext(new SparkConf().setAppName("embedded").setMaster("local[2]"))) { sc =>
+      val vertexRDD: RDD[(Long, (String, Int))] = sc.parallelize(nodes)
+      val edgeRDD: RDD[Edge[Int]] = sc.parallelize(edges)
+      val graph: Graph[(String, Int), Int] = Graph(vertexRDD, edgeRDD)
+      
+      /* Graph statistics */
+      logger.info ("")
+      logger.info ("==> Indegree average <==")
+      val in = graph.inDegrees.map{case (_, value) => (value, 1)}
+        .reduce{case ( c1, c2) => (c1._1 + c2._1, c1._2 + c2._2) }
+      logger.info(s"Indegree average ${in._1/in._2}")
+      
+      logger.info ("")
+      logger.info ("==> Average path <==")
+       //val ave = graph.
     }
   }
 }

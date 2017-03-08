@@ -1,9 +1,7 @@
 package tutorial.mr.task4
 
 import org.scalatest.junit.AssertionsForJUnit
-import scala.collection.mutable.ListBuffer
 import org.junit.Test
-import org.junit.Assert._
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
@@ -15,7 +13,7 @@ import org.apache.spark.SparkContext
 
 import tutorial.mr.task4.embeddedspark._
 
-class Example extends AssertionsForJUnit {
+class Example1 extends AssertionsForJUnit {
   var logger = LoggerFactory.getLogger(getClass)
   val nodes = Array(
         (1L, ("Alice", 28)),

@@ -1,7 +1,5 @@
 package tutorial.mr.task4
 
-import org.scalatest.junit.AssertionsForJUnit
-import org.junit.Test
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
@@ -23,7 +21,7 @@ import java.io._
 import tutorial.mr.task4.embeddedspark._
 import tutorial.mr.task4.Model._
 
-object SearchEngine {
+object SearchEngine extends App {
   var logger = LoggerFactory.getLogger(getClass)
   logger.info (s"${System.getProperty("hadoop.home.dir")}")
   var userDir = System.getProperty("user.dir");
@@ -43,46 +41,45 @@ object SearchEngine {
 	logger.info("Output: {}", outputDir);
 	FileUtils.deleteDirectory(new File(outputDir))
 	
-  def main(args: Array[String]): Unit = {
-    using(new SparkContext(new SparkConf().setAppName("embedded").setMaster("local[2]"))) { sc =>
-      logger.info("Creating Inverted Index")
-      var docs = sc.wholeTextFiles(bookPath)
+  
+  using(new SparkContext(new SparkConf().setAppName("embedded").setMaster("local[2]"))) { sc =>
+    logger.info("Creating Inverted Index")
+    var docs = sc.wholeTextFiles(bookPath)
+      .collect()
+      .map(  t => t._2.decodeOption[Author].getOrElse(null) )
+      .zipWithIndex
+      .map( t => (t._2.toLong, t._1))
+    //docs.foreach { x => logger.info(s"name = ${x.name}") }
+    var docs2 = sc.parallelize(docs)
+    var list = docs2
+      .flatMap( t => t._2.keywords().map( w => (w, t._1)))
+      .map( t => (t, 1))
+      .reduceByKey( (p, q) => p + q )
+      .map( t => (t._1._1, (t._1._2, t._2) ))
+      .groupByKey()
+      .mapValues(t => t.toArray)
+    //list.map( p => (p._1, p._2.mkString(",")) ).saveAsTextFile(outputDir + "/invertedIndex")
+    
+    logger.info("Creating graph")
+    var vertices = docs.map{ case (t, v) => (t, v.name) }
+    var edges = docs.map{ case (i, n) => Edge(i, 0L, 1) }
+    val vertexRDD: RDD[(Long, String)] = sc.parallelize(vertices)
+    val edgeRDD: RDD[Edge[Int]] = sc.parallelize(edges)
+    val graph: Graph[String, Int] = Graph(vertexRDD, edgeRDD)
+    val rank = graph.pageRank(0.001).vertices.map( t => (t._1.toLong, t._2))
+    
+    logger.info("Write your query")
+    for (ln <- scala.io.Source.stdin.getLines) { 
+      var queryList = ln.split("\\s+")
+      // Find documents
+      var hits = list
+        .filter{ case (key, doc) => queryList.contains(key) }
+        .flatMap( t => t._2)
+        .join(rank)
+        .map { case ( id, (freq, pageRank)) => (id, freq + pageRank) }
         .collect()
-        .map(  t => t._2.decodeOption[Author].getOrElse(null) )
-        .zipWithIndex
-        .map( t => (t._2.toLong, t._1))
-      //docs.foreach { x => logger.info(s"name = ${x.name}") }
-      var docs2 = sc.parallelize(docs)
-      var list = docs2
-        .flatMap( t => t._2.keywords().map( w => (w, t._1)))
-        .map( t => (t, 1))
-        .reduceByKey( (p, q) => p + q )
-        .map( t => (t._1._1, (t._1._2, t._2) ))
-        .groupByKey()
-        .mapValues(t => t.toArray)
-      //list.map( p => (p._1, p._2.mkString(",")) ).saveAsTextFile(outputDir + "/invertedIndex")
-      
-      logger.info("Creating graph")
-      var vertices = docs.map{ case (t, v) => (t, v.name) }
-      var edges = docs.map{ case (i, n) => Edge(i, 0L, 1) }
-      val vertexRDD: RDD[(Long, String)] = sc.parallelize(vertices)
-      val edgeRDD: RDD[Edge[Int]] = sc.parallelize(edges)
-      val graph: Graph[String, Int] = Graph(vertexRDD, edgeRDD)
-      val rank = graph.pageRank(0.001).vertices.map( t => (t._1.toLong, t._2))
-      
-      logger.info("Write your query")
-      for (ln <- scala.io.Source.stdin.getLines) { 
-        var queryList = ln.split("\\s+")
-        // Find documents
-        var hits = list
-          .filter{ case (key, doc) => queryList.contains(key) }
-          .flatMap( t => t._2)
-          .join(rank)
-          .map { case ( id, (freq, pageRank)) => (id, freq + pageRank) }
-          .collect()
-        logger.info(s"Query: ${ln}")
-        hits.foreach( t => logger.info(s"id = ${t._1}, score = ${t._2}"))
-      }
+      logger.info(s"Query: ${ln}")
+      hits.foreach( t => logger.info(s"id = ${t._1}, score = ${t._2}"))
     }
   }
 }

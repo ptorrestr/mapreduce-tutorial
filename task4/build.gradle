@@ -4,12 +4,15 @@ apply plugin: 'java'
 sourceCompatibility = 1.6
 
 dependencies {
-  compile "org.scala-lang:scala-library:2.10.1"
+  //compile "org.scala-lang:scala-library:2.10.1"
   compile "org.apache.spark:spark-core_2.10:${sparkVersion}"
   compile "org.apache.spark:spark-streaming_2.10:${sparkVersion}"
   compile "org.apache.spark:spark-graphx_2.10:${sparkVersion}"
   compile "io.argonaut:argonaut_2.10:6.1"
+  compile "org.neo4j.driver:neo4j-java-driver:${neo4jJavaDriverVersion}"
   testCompile "org.scalatest:scalatest_2.10:2.2.6"
+  testCompile "org.neo4j.test:neo4j-harness:${neo4jVersion}"
+  testCompile "org.neo4j:neo4j-slf4j:${neo4jVersion}"
   runtime "org.slf4j:slf4j-log4j12:${slf4jVersion}"
 }
 

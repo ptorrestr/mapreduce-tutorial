@@ -33,6 +33,13 @@ class Example2 extends AssertionsForJUnit {
         .collect()
         .reduce( (t,u) => if (t._2 > u._2) t else u)
       logger.info(s"Diameter: ${diam._2}")
+      
+      logger.info(s"")
+      logger.info(s"==> Join <==")
+      val x = sc.parallelize(Seq( (3, 3), (4, 4) ))
+      val y = sc.parallelize(Seq( (3, 5), (4, 7) ))
+      val z = x.join(y).collect()
+      z.foreach(t => logger.info(s"${t._1}"))
     }
   } 
 }

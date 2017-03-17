@@ -23,6 +23,9 @@ subprojects {
 
   repositories { 
     jcenter()
+    maven {
+      url "https://dl.bintray.com/spark-packages/maven/"
+    }
   }
 
   dependencies {

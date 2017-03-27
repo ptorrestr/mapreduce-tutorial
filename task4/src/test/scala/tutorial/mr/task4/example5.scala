@@ -105,23 +105,26 @@ class Example5 extends AssertionsForJUnit {
     using(new SparkContext(new SparkConf().setAppName("embedded").setMaster("local[2]"))) { sc =>
       import argonaut._, Argonaut._
       // 0
-      // read files and get them from the workers
-      var jsonFiles = sc.wholeTextFiles(bookPath + "/graph3").collect()
-      // Parse jsons 
+      // Read all the files in this folder
+      var jsonFiles = sc.wholeTextFiles(bookPath + "/graph3")
+      // This last function creates a map where the key is the file name
+      // and the value is the content of the file
+
+      // Take the content of the file (t._2) an use Argonout to parse the
+      // text. (decodeOption[Model2.Node]). If we can extract an object
+      // Node, then get it otherwise, create a null.
       var jsonObjects = jsonFiles
         .map( t => t._2.decodeOption[Model2.Node].getOrElse(null))
-      // Distribute the objects into workers
-      
-      var nodes = sc.parallelize(jsonObjects)
+      // Now we can create the node and edges as usually
       
       // 1
       // We define a map so we can transform one string into a integer when creating the edges
-      var vertices:RDD[(Long, (String, Int))] = nodes
+      var vertices:RDD[(Long, (String, Int))] = jsonObjects
         .map( t => (t.id.toLong, (t.name, t.age)))
       
       // 2
       // We create a RDD for the edges: JavaRDD[Edge[Integer]]
-      var edges:RDD[Edge[Int]] = nodes
+      var edges:RDD[Edge[Int]] = jsonObjects
         .flatMap( t => t.links.map { 
           case (link) => Edge(t.id, link(0), link(1)) 
         })
